@@ -1,9 +1,13 @@
-import Home from "./components/Home";
+import QiitaArticles from "./components/QiitaArticles";
+import Header from "./components/Header";
+import ZennArticles from "./components/ZennArticles";
 
 export default function Page() {
   return (
     <div>
-      <Home />
+      <Header />
+      <QiitaArticles />
+      <ZennArticles />
     </div>
   );
 }
