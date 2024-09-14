@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply bg-white text-white;
+}
+
+/* ダークモード設定を上書き */
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-white text-white;
+  }
+}
