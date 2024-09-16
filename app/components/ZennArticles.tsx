@@ -51,22 +51,26 @@ const ZennArticles = () => {
         <h1 className="text-2xl font-bold m-8 text-gray-600">Zenn記事一覧</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {zennArticles.map((zennArticle: Article) => (
-            <div key={zennArticle.url} className="card bg-base-100 shadow-xl">
+            <div key={zennArticle.url} className="card shadow-xl">
               <div className="card-body">
-                <h2 className="card-title">{zennArticle.title}</h2>
-                <p>作者: {zennArticle.user.name}</p>
-                <p>
+                <h2 className="card-title text-gray-600">
+                  {zennArticle.title}
+                </h2>
+                <p className="text-gray-600">作者: {zennArticle.user.name}</p>
+                <p className="text-gray-600">
                   作成日:{" "}
                   {new Date(zennArticle.created_at).toLocaleDateString()}
                 </p>
-
-                <Link
-                  href={zennArticle.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  記事を読む
-                </Link>
+                <div className="card-actions justify-end">
+                  <Link
+                    href={zennArticle.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600"
+                  >
+                    記事を読む
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
