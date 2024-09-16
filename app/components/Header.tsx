@@ -60,7 +60,7 @@ const Header: React.FC = () => {
     <div className="bg-white shadow-md h-26">
       <div className="container mx-auto px-4 py-4 h-full">
         <div className="flex flex-col w-full">
-          <div className="text-2xl font-bold text-gray-600 mb-4">DevSpes</div>
+          <h1 className="text-2xl font-bold text-gray-600 mb-4">DevSpes</h1>
           <nav className="w-full">
             <ul className="flex justify-center space-x-4">
               {tabs.map((tab) => (
