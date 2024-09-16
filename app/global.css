@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-white text-white;
+  @apply bg-white text-black;
 }
 
 /* ダークモード設定を上書き */

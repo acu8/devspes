@@ -21,8 +21,6 @@ const ZennArticles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-
-
   const fetchZennArticles = async (): Promise<Article[]> => {
     try {
       setIsLoading(true);
@@ -50,7 +48,7 @@ const ZennArticles = () => {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-bold m-8">Zenn記事一覧</h1>
+        <h1 className="text-2xl font-bold m-8 text-gray-600">Zenn記事一覧</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {zennArticles.map((zennArticle: Article) => (
             <div key={zennArticle.url} className="card bg-base-100 shadow-xl">

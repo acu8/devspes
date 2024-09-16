@@ -31,14 +31,18 @@ const Resources = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Engineering Resources</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-600">
+        Engineering Resources
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {resources.map((resource) => (
           <div key={resource.id} className="border rounded-lg p-4 shadow-md">
-            <h2 className="text-xl font-semibold mb-2">{resource.title}</h2>
+            <h2 className="text-xl font-semibold mb-2 text-gray-600">
+              {resource.title}
+            </h2>
             <p className="text-gray-600 mb-2">{resource.company}</p>
             <p className="text-sm text-gray-500 mb-4">{resource.author}</p>
-            <p className="mb-4">{resource.description}</p>
+            <p className="mb-4 text-gray-600">{resource.description}</p>
             <div className="flex flex-wrap gap-2 mb-4">
               {resource.tags.map((tag, index) => (
                 <span

@@ -48,10 +48,10 @@ const QiitaArticles = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold m-8">Qiita記事一覧</h1>
+      <h1 className="text-2xl font-bold m-8 text-gray-600">Qiita記事一覧</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {articles.map((article: Article) => (
-          <div className="card bg-base-100 shadow-xl" key={article.url}>
+          <div className="card text-gray-600 shadow-xl" key={article.url}>
             <div className="card-body">
               <h2 className="card-title">{article.title}</h2>
               <p>作者: {article.user.name}</p>
