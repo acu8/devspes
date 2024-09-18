@@ -61,7 +61,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4  h-full">
         <div className="flex flex-col w-full">
           <h1 className="text-2xl font-bold text-gray-600 mt-4 mb-4">
-            DevSpes
+            Learn Hub
           </h1>
           <nav className="w-full">
             <ul className="flex justify-center space-x-4">
