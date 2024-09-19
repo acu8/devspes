@@ -5,7 +5,7 @@ import QiitaArticles from "./QiitaArticles";
 import ZennArticles from "./ZennArticles";
 import Resources from "./Resources";
 
-type TabType = "home" | "qiita" | "zenn" | "resources";
+type TabType = "home" | "resources";
 
 interface TabContent {
   title: string;
@@ -21,24 +21,7 @@ const Header: React.FC = () => {
       content: (
         <div>
           <h2 className="text-2xl font-bold mb-4">ホーム</h2>
-          <p>ここにホームコンテンツを表示します。</p>
-        </div>
-      ),
-    },
-    qiita: {
-      title: "Qiita",
-      content: (
-        <div>
-          <h2 className="text-2xl font-bold mb-4">トレンド</h2>
           <QiitaArticles />
-        </div>
-      ),
-    },
-    zenn: {
-      title: "Zenn",
-      content: (
-        <div>
-          <h2 className="text-2xl font-bold mb-4">トピックス</h2>
           <ZennArticles />
         </div>
       ),
@@ -54,7 +37,7 @@ const Header: React.FC = () => {
     },
   };
 
-  const tabs: TabType[] = ["home", "qiita", "zenn", "resources"];
+  const tabs: TabType[] = ["home", "resources"];
 
   return (
     <div className="bg-white shadow-md h-25">
