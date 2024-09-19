@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const QIITA_API_TOKEN = process.env.QIITA_API_TOKEN;
+    const QIITA_API_TOKEN = process.env.NEXT_PUBLIC_QIITA_API_TOKEN;
     const { page = 1, per_page = 20 } = req.query;
 
     if (!QIITA_API_TOKEN) {
