@@ -25,8 +25,10 @@ const Articles = () => {
   const fetchAllArticles = async (): Promise<Article[]> => {
     try {
       setIsLoading(true);
-      const qiitaResponse = await fetch("/api/qiita");
-      const zennResponse = await fetch("/api/zenn");
+      const [qiitaResponse, zennResponse] = await Promise.all([
+        fetch("/api/qiita"),
+        fetch("/api/zenn"),
+      ]);
 
       if (!qiitaResponse.ok || !zennResponse.ok) {
         throw new Error("Failed to fetch articles");
