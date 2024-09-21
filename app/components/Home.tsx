@@ -1,12 +1,10 @@
 import React from "react";
-import QiitaArticles from "./QiitaArticles";
-import ZennArticles from "./ZennArticles";
+import Articles from "./Articles";
 
 const Home = () => {
   return (
     <div>
-      <QiitaArticles />;
-      <ZennArticles />;
+      <Articles />;
     </div>
   );
 };

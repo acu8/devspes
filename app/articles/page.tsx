@@ -16,20 +16,26 @@ interface Article {
   user: User;
 }
 
-const QiitaArticles = () => {
+const fullArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
-
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const INITIAL_DISPLAY = 10;
 
   const fetchAllArticles = async (): Promise<Article[]> => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/qiita");
-      if (!response.ok) {
+      const qiitaResponse = await fetch("/api/qiita");
+      const zennResponse = await fetch("/api/zenn");
+
+      if (!qiitaResponse.ok || !zennResponse.ok) {
         throw new Error("Failed to fetch articles");
       }
-      return await response.json();
+      const qiitaArticles: Article[] = await qiitaResponse.json();
+      const zennArticles: Article[] = await zennResponse.json();
+
+      const articles: Article[] = [...qiitaArticles, ...zennArticles];
+      return articles;
     } catch (err) {
       setError("Error fetching articles");
       console.error(err);
@@ -48,15 +54,12 @@ const QiitaArticles = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold m-8 text-gray-600">Qiita記事一覧</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {articles.map((article: Article) => (
           <div className="card text-gray-600 shadow-xl" key={article.url}>
             <div className="card-body">
               <h2 className="card-title">{article.title}</h2>
               <p>作者: {article.user.name}</p>
-
-              <p>ストック数: {article.stocks_count}</p>
               <p>作成日: {new Date(article.created_at).toLocaleDateString()}</p>
               <div className="card-actions justify-end">
                 <Link
@@ -75,4 +78,4 @@ const QiitaArticles = () => {
   );
 };
 
-export default QiitaArticles;
+export default fullArticles;
