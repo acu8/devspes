@@ -5,6 +5,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const per_page = 100; 
     // const { page = 1, per_page = 20 } = req.query;
 
+    console.log("QIITA_API_TOKEN is set:", !!QIITA_API_TOKEN);
+
     if (!QIITA_API_TOKEN) {
         return res.status(500).json({ error: "Qiita API token is not set" });
       }
@@ -24,8 +26,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             );
 
+            console.log("Response status:", response.status);
+            console.log("Response headers:", response.headers);
+
             if (!response.ok) {
-                throw new Error("Failed to fetch Qiita articles");
+                const errorText = await response.text();
+                console.error("Error response body:", errorText);
+                throw new Error(`Failed to fetch Qiita articles: ${response.status} ${response.statusText}`);
             }
 
             const articles = await response.json();
