@@ -22,41 +22,37 @@ const fullArticles = () => {
   const [error, setError] = useState<string | null>(null);
   const [isQiitaMaintenance, setIsQiitaMaintenance] = useState(false);
   const [isZennMaintenance, setIsZennMaintenance] = useState(false);
-  const INITIAL_DISPLAY = 10;
 
   const fetchAllArticles = async (): Promise<Article[]> => {
     try {
       setIsLoading(true);
-      const qiitaResponse = await fetch("/api/qiita");
-      const zennResponse = await fetch("/api/zenn");
+      const [qiitaResponse, zennResponse] = await Promise.all([
+        fetch("/api/qiita"),
+        fetch("/api/zenn"),
+      ]);
 
-      if (!qiitaResponse.ok) {
-        if (qiitaResponse.status === 500) {
-          setIsQiitaMaintenance(true);
-          throw new Error("Qiita is currently under maintenance");
-        }
-        throw new Error(`Qiita API error: ${qiitaResponse.status}`);
-      }
-      if (!zennResponse.ok) {
-        if (zennResponse.status === 500) {
-          setIsZennMaintenance(true);
-          throw new Error("Zenn is currently under maintenance");
-        }
-        throw new Error(`Zenn API error: ${zennResponse.status}`);
-      }
-
-      const qiitaArticles: Article[] = await qiitaResponse.json();
+      let qiitaArticles: Article[] = [];
       let zennArticles: Article[] = [];
 
-      if (zennResponse.status !== 304) {
-        if (!zennResponse.ok) {
-          throw new Error(`Zenn API error: ${zennResponse.status}`);
-        }
-        zennArticles = await zennResponse.json();
+      if (qiitaResponse.ok) {
+        qiitaArticles = await qiitaResponse.json();
+        console.log("Qiita articles:", qiitaArticles.length);
+      } else {
+        console.error("Qiita API error:", qiitaResponse.status);
+        setIsQiitaMaintenance(true);
       }
 
-      const articles: Article[] = [...qiitaArticles, ...zennArticles];
-      return articles;
+      if (zennResponse.ok) {
+        zennArticles = await zennResponse.json();
+        console.log("Zenn articles:", zennArticles.length);
+      } else if (zennResponse.status === 304) {
+        console.log("Zenn: No new content");
+      } else {
+        console.error("Zenn API error:", zennResponse.status);
+        setIsZennMaintenance(true);
+      }
+
+      return [...qiitaArticles, ...zennArticles];
     } catch (err) {
       setError("Error fetching articles");
       console.error(err);
@@ -71,29 +67,32 @@ const fullArticles = () => {
   }, []);
 
   if (isLoading) return <div>Loading...</div>;
-
-  if (isQiitaMaintenance || isZennMaintenance) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div
-          className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 max-w-md"
-          role="alert"
-        >
-          <h2 className="font-bold text-xl mb-2">
-            記事取得元はただいまメンテナンス中です
-          </h2>
-          <p>
-            記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   if (error) return <div>{error}</div>;
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {isQiitaMaintenance && (
+        <div
+          className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+          role="alert"
+        >
+          <h2 className="font-bold">Qiitaはただいまメンテナンス中です</h2>
+          <p>
+            Qiita記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
+          </p>
+        </div>
+      )}
+      {isZennMaintenance && (
+        <div
+          className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+          role="alert"
+        >
+          <h2 className="font-bold">Zennはただいまメンテナンス中です</h2>
+          <p>
+            Zenn記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
+          </p>
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article: Article) => (
           <div className="border rounded-lg p-4 shadow-md" key={article.url}>

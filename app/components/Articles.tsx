@@ -40,6 +40,7 @@ const Articles = () => {
         console.log("Qiita articles:", qiitaArticles.length);
       } else {
         console.error("Qiita API error:", qiitaResponse.status);
+        setIsQiitaMaintenance(true);
       }
 
       if (zennResponse.ok) {
@@ -49,6 +50,7 @@ const Articles = () => {
         console.log("Zenn: No new content");
       } else {
         console.error("Zenn API error:", zennResponse.status);
+        setIsZennMaintenance(true);
       }
 
       return [...qiitaArticles, ...zennArticles];
@@ -70,27 +72,32 @@ const Articles = () => {
   }, []);
 
   if (isLoading) return <div>Loading...</div>;
-
-  if (isQiitaMaintenance || isZennMaintenance) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div
-          className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
-          role="alert"
-        >
-          <h2 className="font-bold">記事取得元はただいまメンテナンス中です</h2>
-          <p>
-            記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   if (error) return <div>{error}</div>;
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {isQiitaMaintenance && (
+        <div
+          className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+          role="alert"
+        >
+          <h2 className="font-bold">Qiitaはただいまメンテナンス中です</h2>
+          <p>
+            Qiita記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
+          </p>
+        </div>
+      )}
+      {isZennMaintenance && (
+        <div
+          className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+          role="alert"
+        >
+          <h2 className="font-bold">Zennはただいまメンテナンス中です</h2>
+          <p>
+            Zenn記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
+          </p>
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article: Article) => (
           <div className="border rounded-lg p-4 shadow-md" key={article.url}>
