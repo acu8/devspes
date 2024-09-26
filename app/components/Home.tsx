@@ -3,6 +3,10 @@
 import React, { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Information from "./Information";
+import SideToSide from "./SideToSide";
+import BottomImage from "./BottomImage";
+import Footer from "./Footer";
 
 interface TeamCardProps {
   title: string;
@@ -42,43 +46,43 @@ const Home = () => {
 
   const teams = [
     {
-      title: "Engineering",
+      title: "記事から探す",
       icon: (
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <rect width="100" height="100" fill="#e6f7ff" />
           <circle cx="50" cy="50" r="30" fill="#1890ff" />
           <text x="50" y="55" fontSize="12" fill="white" textAnchor="middle">
-            AI
+            Articles
           </text>
         </svg>
       ),
     },
     {
-      title: "Support",
+      title: "大学や企業のリソースを確認する",
       icon: (
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <rect width="100" height="100" fill="#f6ffed" />
           <rect x="20" y="20" width="60" height="60" fill="#52c41a" rx="8" />
           <text x="50" y="55" fontSize="12" fill="white" textAnchor="middle">
-            ?
+            Resources
           </text>
         </svg>
       ),
     },
     {
-      title: "Sales",
+      title: "本から探す",
       icon: (
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <rect width="100" height="100" fill="#fff7e6" />
           <polygon points="50,20 80,80 20,80" fill="#fa8c16" />
           <text x="50" y="65" fontSize="12" fill="white" textAnchor="middle">
-            $
+            Book
           </text>
         </svg>
       ),
     },
     {
-      title: "All teams",
+      title: "無料プラットフォームを確認",
       icon: (
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <rect width="100" height="100" fill="#f0f5ff" />
@@ -94,7 +98,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-[1000px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#c5ff3d] via-[#8ee7f3] to-[#405bff] z-0"></div>
         <div className="relative z-10 text-center">
           <h1 className="text-6xl font-bold mb-8">Start Today</h1>
@@ -124,15 +128,15 @@ const Home = () => {
       </section>
       {/* Capabilities section */}
 
-      <div className="min-h-screen bg-[#fafafa] py-16 px-4">
+      <div className="h-[1000px] bg-[#fffaf0] py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row">
             <div className="lg:w-1/3 mb-8 lg:mb-0 lg:pr-8">
               <h2 className="text-5xl font-bold leading-tight text-[#1a1a1a]">
-                Glean makes work better for everyone.
+                Learn Hub makes work better for everyone.
               </h2>
             </div>
-            <div className="lg:w-2/3">
+            <div className="lg:w-2/3 pt-20 pb-20">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {teams.map((team) => (
                   <TeamCard
@@ -152,6 +156,10 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Information />
+      <SideToSide />
+      <BottomImage />
+      <Footer />
     </div>
   );
 };
