@@ -75,65 +75,68 @@ const Articles = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {isQiitaMaintenance && (
-        <div
-          className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
-          role="alert"
-        >
-          <h2 className="font-bold">Qiitaはただいまメンテナンス中です</h2>
-          <p>
-            Qiita記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
-          </p>
-        </div>
-      )}
-      {isZennMaintenance && (
-        <div
-          className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
-          role="alert"
-        >
-          <h2 className="font-bold">Zennはただいまメンテナンス中です</h2>
-          <p>
-            Zenn記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
-          </p>
-        </div>
-      )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {articles.map((article: Article) => (
-          <div className="border rounded-lg p-4 shadow-md" key={article.url}>
-            <h2 className="text-xl font-semibold mb-2 text-gray-600">
-              {article.title}
-            </h2>
-            <p className="text-sm text-gray-500 mb-4">
-              作者: {article.user.name}
+
+     
+      <div className="container mx-auto px-4 py-16">
+        {isQiitaMaintenance && (
+          <div
+            className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+            role="alert"
+          >
+            <h2 className="font-bold">Qiitaはただいまメンテナンス中です</h2>
+            <p>
+              Qiita記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
             </p>
-            <p className="text-sm text-gray-500 mb-4">
-              作成日: {new Date(article.created_at).toLocaleDateString()}
+          </div>
+        )}
+        {isZennMaintenance && (
+          <div
+            className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+            role="alert"
+          >
+            <h2 className="font-bold">Zennはただいまメンテナンス中です</h2>
+            <p>
+              Zenn記事の閲覧は一時的に利用できません。しばらくしてからもう一度お試しください。
             </p>
-            {/* <div className="flex flex-wrap gap-2 mb-4">
+          </div>
+        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {articles.map((article: Article) => (
+            <div
+              className="bg-white rounded-lg p-6 shadow-lg"
+              key={article.url}
+            >
+              <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+                {article.title}
+              </h2>
+              <p className="text-gray-600 mb-4">作者: {article.user.name}</p>
+              <p className="text-gray-600 mb-6">
+                作成日: {new Date(article.created_at).toLocaleDateString()}
+              </p>
+              {/* <div className="flex flex-wrap gap-2 mb-4">
               <span className="bg-gray-200 rounded-full px-3 py-1 text-sm">
                 ストック数: {article.stocks_count}
               </span>
             </div> */}
-            <Link
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-700 hover:underline"
-            >
-              記事を読む
-            </Link>
-          </div>
-        ))}
+              <Link
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-600"
+              >
+                記事を読む
+              </Link>
+            </div>
+          ))}
+        </div>
+        <div className="mt-12 text-center">
+          <Link href="/articles" passHref>
+            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full">
+              もっと見る
+            </button>
+          </Link>
+        </div>
       </div>
-      <div className="mt-6">
-        <Link href="/articles" passHref>
-          <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-            もっと見る
-          </button>
-        </Link>
-      </div>
-    </div>
   );
 };
 
