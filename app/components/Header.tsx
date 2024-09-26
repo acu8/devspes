@@ -14,7 +14,9 @@ const Header = () => {
 
       {/* Navigation */}
       <nav className="flex items-center justify-between p-4">
-        <div className="text-2xl font-bold text-blue-600">Learn Hub</div>
+        <div className="text-2xl font-bold text-blue-600">
+          <h1>Learn Hub</h1>
+        </div>
         <div className="hidden md:flex space-x-4">
           <a href="#" className="text-gray-600">
             Product
