@@ -14,9 +14,7 @@ const BookRanking: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      console.log("Fetching book data...");
       const response = await fetch("/api/bookextraction");
-      console.log("Response status:", response.status);
       if (!response.ok) {
         throw new Error(`Failed to fetch book data: ${response.status}`);
       }
@@ -33,10 +31,6 @@ const BookRanking: React.FC = () => {
     }
   }
 
-  console.log("Current bookCounts state:", bookCounts);
-  console.log("Current loading state:", loading);
-  console.log("Current error state:", error);
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Tech Book Ranking</h1>
@@ -48,9 +42,13 @@ const BookRanking: React.FC = () => {
           <h2 className="text-2xl font-semibold mb-2">
             {index + 1}. {book.bookDetails?.title || "Unknown Title"}
           </h2>
-          <p className="mb-2">
-            Author: {book.bookDetails?.author || "Unknown"}
-          </p>
+
+          {Array.isArray(book.bookDetails?.author) &&
+          book.bookDetails?.author?.length === 1 ? (
+            <p className="mb-2">Author: {book.bookDetails?.author}</p>
+          ) : (
+            <p className="mb-2">Author: {book.bookDetails?.author?.[0]} 他</p>
+          )}
           <p className="mb-2">Mentions: {book.count}</p>
           {book.bookDetails?.coverUrl && (
             <img
