@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { BookCount } from "../types/book";
-import { updateBooksTable } from "../supabaseFunction";
+import { getBooks } from "../supabaseFunction";
 
 const BookRanking: React.FC = () => {
   const [bookCounts, setBookCounts] = useState<BookCount[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchAndProcessArticles();
-  }, []);
 
-  async function fetchAndProcessArticles() {
+
+  async function fetchAndProcessBooks() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/bookextraction");
-      if (!response.ok) {
-        throw new Error(`Failed to fetch book data: ${response.status}`);
+      const response = await getBooks();
+      if (response === null) {
+        throw new Error(`Failed to fetch book data`);
       }
-      const bookCounts = await response.json();
-      console.log("Received book counts:", bookCounts);
-      setBookCounts(bookCounts.sort((a, b) => b.count - a.count));
-
-      await updateBooksTable(bookCounts);
+      console.log("Received book counts:", response);
+      setBookCounts(response.sort((a, b) => b.count - a.count));
     } catch (err) {
       console.error("Error in fetchAndProcessArticles:", err);
       setError(
@@ -33,6 +28,10 @@ const BookRanking: React.FC = () => {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    fetchAndProcessBooks();
+  }, []);
 
   return (
     <div className="container mx-auto p-4">
