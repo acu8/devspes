@@ -78,7 +78,7 @@ export async function countBookUrls(qiitaArticles: any[]): Promise<BookCount[]> 
             url, 
             count: 0,
             articles: [],
-            bookDetails: bookDetails || { title: title || 'Unknown Title', author: 'Unknown Author', coverUrl: null }
+            bookDetails: bookDetails || { title: title || 'Unknown Title', author: ['Unknown Author'], coverUrl: null }
           };
         }
         urlCounts[url].count += 1;
