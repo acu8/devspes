@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BookCount } from "../types/book";
+import { updateBooksTable } from "../supabaseFunction";
 
 const BookRanking: React.FC = () => {
   const [bookCounts, setBookCounts] = useState<BookCount[]>([]);
@@ -21,6 +22,8 @@ const BookRanking: React.FC = () => {
       const bookCounts = await response.json();
       console.log("Received book counts:", bookCounts);
       setBookCounts(bookCounts.sort((a, b) => b.count - a.count));
+
+      await updateBooksTable(bookCounts);
     } catch (err) {
       console.error("Error in fetchAndProcessArticles:", err);
       setError(
