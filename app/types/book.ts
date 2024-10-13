@@ -7,7 +7,7 @@ export interface Book {
 
 export interface BookDetails {
     title: string | null;
-    author: string[] | null;
+    author: string | string[] | null;
     coverUrl: string | null;
   }
   
@@ -22,7 +22,7 @@ export interface BookCount {
     title:string;
     authors: string;
     count: number;
-    articles:string;
+    articles: string;
     bookDetails: BookDetails;
     coverUrl: string;
   }

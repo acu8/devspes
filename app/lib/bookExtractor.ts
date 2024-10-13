@@ -53,6 +53,15 @@ export async function fetchBookDetails(isbn: string): Promise<BookDetails | null
 }
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+function ensureStringArray(value: string | string[] | null | undefined): string[] {
+  if (Array.isArray(value)) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    return [value];
+  }
+  return ['Unknown Author'];
+}
 
 
 export async function countBookUrls(qiitaArticles: any[]): Promise<BookCount[]> {
@@ -76,17 +85,22 @@ export async function countBookUrls(qiitaArticles: any[]): Promise<BookCount[]> 
           }
           urlCounts[url] = { 
             url, 
+            title: bookDetails?.title || title || "Unknown Title",
+            authors: JSON.stringify(ensureStringArray(bookDetails?.author)),
             count: 0,
-            articles: [],
-            bookDetails: bookDetails || { title: title || 'Unknown Title', author: ['Unknown Author'], coverUrl: null }
+            articles: JSON.stringify([]),
+            bookDetails: bookDetails || { title: title || 'Unknown Title', author: ['Unknown Author'], coverUrl: null },
+            coverUrl: bookDetails?.coverUrl || ''
           };
         }
         urlCounts[url].count += 1;
-        urlCounts[url].articles.push({
+        const currentArticles = JSON.parse(urlCounts[url].articles);
+        currentArticles.push({
           title: article.title,
           url: article.url,
           source
         });
+        urlCounts[url].articles = JSON.stringify(currentArticles);
       }
     }
   }
