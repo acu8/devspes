@@ -1,23 +1,41 @@
 import { NextResponse } from "next/server";
-import { supabase } from "../../lib/supabase";
+import { BookCount } from "../../types/book";
+import { countBookUrls } from '../../lib/bookExtractor';
+import { createClient } from '@supabase/supabase-js'
+
 
 export const runtime = 'edge';
+
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+
+async function fetchAndProcessBooks(): Promise<BookCount[]> {
+    const qiitaResponse = await fetch('https://qiita.com/api/v2/items?per_page=80&query=tag:本%20OR%20tag:本%20OR%20tag:書籍%20stocks:>50', {
+      headers: {
+        Authorization: `Bearer ${process.env.QIITA_API_TOKEN}`
+      }
+    });
+    
+    const data = await qiitaResponse.json();
+    return await countBookUrls(data);
+  }
 
 export async function GET(request: Request) {
     const authHeader = request.headers.get('authorization');
 
-    if (authHeader !== `Bearer ${process.env.NEXT_PUBLIC_CRON_TOKEN}`) { 
+    if (authHeader !== `Bearer ${process.env.CRON_TOKEN}`) { 
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
 
     try{
-        const response = await fetch("/api/bookextraction");
-        const data = await response.json();
-
-        const { data: insertedData, error } = await supabase
+        const response = await fetchAndProcessBooks();
+    
+        const { data, error } = await supabase
             .from('books')
             .upsert(
-                data.map(book =>({
+                response.map((book: BookCount) =>({
                     url: book.url,
                     title: book.bookDetails.title,
                     authors:JSON.stringify(book.bookDetails.author),
@@ -34,7 +52,7 @@ export async function GET(request: Request) {
     
     } catch (error){
         console.error("Batch process failed:", error); 
-        return NextResponse.json({ success: false, error: "Data processed and inserted" }, { status: 500 });
+        return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 });
 
     }
 }

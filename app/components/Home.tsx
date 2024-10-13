@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Information from "./Information";
@@ -13,6 +15,7 @@ interface TeamCardProps {
   icon: React.ReactNode;
   isActive: boolean;
   onClick: () => void;
+  path: string;
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({
@@ -20,25 +23,28 @@ const TeamCard: React.FC<TeamCardProps> = ({
   icon,
   isActive,
   onClick,
+  path,
 }) => (
-  <div
-    className={`bg-white rounded-lg shadow-md p-6 flex flex-col items-center cursor-pointer transition-all duration-300 ease-in-out ${
-      isActive ? "transform scale-105 bg-[#f0f5ff]" : ""
-    }`}
-    onClick={onClick}
-  >
-    <div className="mb-4 w-24 h-24">{icon}</div>
-    <h3 className="text-xl font-semibold mb-4">{title}</h3>
-    <button
-      className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-        isActive ? "bg-[#2f54eb]" : "bg-[#c5ff3d]"
+  <Link href={path}>
+    <div
+      className={`bg-white rounded-lg shadow-md p-6 flex flex-col items-center cursor-pointer transition-all duration-300 ease-in-out ${
+        isActive ? "transform scale-105 bg-[#f0f5ff]" : ""
       }`}
+      onClick={onClick}
     >
-      <ArrowRight
-        className={`w-6 h-6 ${isActive ? "text-white" : "text-black"}`}
-      />
-    </button>
-  </div>
+      <div className="mb-4 w-24 h-24">{icon}</div>
+      <h3 className="text-xl font-semibold mb-4">{title}</h3>
+      <button
+        className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+          isActive ? "bg-[#2f54eb]" : "bg-[#c5ff3d]"
+        }`}
+      >
+        <ArrowRight
+          className={`w-6 h-6 ${isActive ? "text-white" : "text-black"}`}
+        />
+      </button>
+    </div>
+  </Link>
 );
 
 const Home = () => {
@@ -47,6 +53,7 @@ const Home = () => {
   const teams = [
     {
       title: "記事から探す",
+      path: "/articles",
       icon: (
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <rect width="100" height="100" fill="#e6f7ff" />
@@ -59,6 +66,7 @@ const Home = () => {
     },
     {
       title: "大学や企業のリソースを確認する",
+      path: "/resources",
       icon: (
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <rect width="100" height="100" fill="#f6ffed" />
@@ -71,6 +79,7 @@ const Home = () => {
     },
     {
       title: "本から探す",
+      path: "/books",
       icon: (
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <rect width="100" height="100" fill="#fff7e6" />
@@ -83,6 +92,7 @@ const Home = () => {
     },
     {
       title: "無料プラットフォームを確認",
+      path: "/platforms",
       icon: (
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <rect width="100" height="100" fill="#f0f5ff" />
@@ -143,6 +153,7 @@ const Home = () => {
                     key={team.title}
                     title={team.title}
                     icon={team.icon}
+                    path={team.path}
                     isActive={activeCard === team.title}
                     onClick={() =>
                       setActiveCard(

@@ -7,8 +7,6 @@ const BookRanking: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-
-
   async function fetchAndProcessBooks() {
     setLoading(true);
     setError(null);
@@ -42,37 +40,56 @@ const BookRanking: React.FC = () => {
       {bookCounts.map((book, index) => (
         <div key={book.url} className="mb-8 p-4 border rounded shadow">
           <h2 className="text-2xl font-semibold mb-2">
-            {index + 1}. {book.bookDetails?.title || "Unknown Title"}
+            {index + 1}. {book.title || "Unknown Title"}
           </h2>
+          {(() => {
+            try {
+              const authors = JSON.parse(book.authors);
+              if (Array.isArray(authors)) {
+                if (authors.length === 1) {
+                  return <p className="mb-2">Author: {authors[0]}</p>;
+                } else if (authors.length > 1) {
+                  return <p className="mb-2">Authors: {authors[0]} 他</p>;
+                }
+              }
+              return <p className="mb-2">Author: Unknown</p>;
+            } catch (error) {
+              console.error("Error parsing authors:", error);
+              return <p className="mb-2">Author: Error occurred</p>;
+            }
+          })()}
 
-          {Array.isArray(book.bookDetails?.author) &&
-          book.bookDetails?.author?.length === 1 ? (
-            <p className="mb-2">Author: {book.bookDetails?.author}</p>
-          ) : (
-            <p className="mb-2">Author: {book.bookDetails?.author?.[0]} 他</p>
-          )}
           <p className="mb-2">Mentions: {book.count}</p>
-          {book.bookDetails?.coverUrl && (
+          {book.coverUrl && (
             <img
-              src={book.bookDetails.coverUrl}
-              alt={`Cover of ${book.bookDetails.title}`}
+              src={book.coverUrl}
+              alt={`Cover of ${book.title}`}
               className="w-32 h-auto mb-4"
             />
           )}
           <h3 className="text-xl font-semibold mb-2">Mentioned in:</h3>
           <ul className="list-disc pl-5">
-            {book.articles.map((article, articleIndex) => (
-              <li key={articleIndex}>
-                <a
-                  href={article.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
-                >
-                  {article.title} ({article.source})
-                </a>
-              </li>
-            ))}
+            {(() => {
+              try {
+                const articlesArray = JSON.parse(book.articles);
+                if (Array.isArray(articlesArray)) {
+                  return articlesArray.map((article, index) => (
+                    <li key={index}>
+                      <a
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {article.title} ({article.source})
+                      </a>
+                    </li>
+                  ));
+                }
+              } catch (error) {
+                console.error("Error parsing articles:", error);
+              }
+              return <p>No articles available or invalid data</p>;
+            })()}
           </ul>
         </div>
       ))}

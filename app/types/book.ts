@@ -19,8 +19,10 @@ export interface ArticleReference {
   
 export interface BookCount {
     url: string;
+    title:string;
+    authors: string;
     count: number;
-    articles: ArticleReference[];
+    articles:string;
     bookDetails: BookDetails;
+    coverUrl: string;
   }
-

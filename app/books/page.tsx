@@ -5,7 +5,6 @@ import BookRanking from "../components/BookRanking";
 const Books: React.FC = () => {
   return (
     <div>
-      <h1>Tech Book Rank</h1>
       <BookRanking />
     </div>
   );
