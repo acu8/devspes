@@ -14,7 +14,7 @@ const supabase = createClient(
 async function fetchAndProcessBooks(): Promise<BookCount[]> {
     const qiitaResponse = await fetch('https://qiita.com/api/v2/items?per_page=80&query=tag:本%20OR%20tag:本%20OR%20tag:書籍%20stocks:>50', {
       headers: {
-        Authorization: `Bearer ${process.env.QIITA_API_TOKEN}`
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_QIITA_API_TOKEN}`
       }
     });
     
