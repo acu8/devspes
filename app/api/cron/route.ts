@@ -6,10 +6,12 @@ import { createClient } from '@supabase/supabase-js'
 
 export const runtime = 'edge';
 
-const supabase = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_ANON_KEY!
-  )
+function getSupabase() {
+    return createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+  }
 
 async function fetchAndProcessBooks(): Promise<BookCount[]> {
     const qiitaResponse = await fetch('https://qiita.com/api/v2/items?per_page=80&query=tag:本%20OR%20tag:本%20OR%20tag:書籍%20stocks:>50', {
@@ -31,7 +33,8 @@ export async function GET(request: Request) {
 
     try{
         const response = await fetchAndProcessBooks();
-    
+        const supabase = getSupabase();
+        
         const { data, error } = await supabase
             .from('books')
             .upsert(
