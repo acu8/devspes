@@ -6,12 +6,19 @@ import { getCurrentUser, signOut } from "../login/action";
 import Link from "next/link";
 import { User } from "@supabase/supabase-js";
 
-export default function Header() {
+interface HeaderProps {
+  getCurrentUser?: () => Promise<User | null>;
+}
+
+const Header: React.FC<HeaderProps> = ({ getCurrentUser }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    getCurrentUser().then(setUser);
-  }, []);
+    if (getCurrentUser) {
+      getCurrentUser().then(setUser);
+    }
+  }, [getCurrentUser]);
+
   return (
     <div className="flex flex-col">
       {/* Top banner */}
@@ -56,4 +63,6 @@ export default function Header() {
       </nav>
     </div>
   );
-}
+};
+
+export default Header;
