@@ -1,7 +1,17 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
+"use client";
 
-const Header = () => {
+import React, { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { getCurrentUser, signOut } from "../login/action";
+import Link from "next/link";
+import { User } from "@supabase/supabase-js";
+
+export default function Header() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    getCurrentUser().then(setUser);
+  }, []);
   return (
     <div className="flex flex-col">
       {/* Top banner */}
@@ -32,12 +42,18 @@ const Header = () => {
           </a>
         </div>
         <div className="flex space-x-2">
-          <Button variant="outline">Sign in</Button>
-          <Button>Get a demo</Button>
+          {user ? (
+            <form action={signOut} className="flex items-center gap-2">
+              <p>{user.email}</p>
+              <Button>Sign Out</Button>
+            </form>
+          ) : (
+            <Button asChild>
+              <Link href="/login">Sign In</Link>
+            </Button>
+          )}
         </div>
       </nav>
     </div>
   );
-};
-
-export default Header;
+}
