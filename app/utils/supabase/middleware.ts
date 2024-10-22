@@ -1,3 +1,5 @@
+
+
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
@@ -31,19 +33,31 @@ export async function updateSession(request: NextRequest) {
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
 
+  const protectedRoutes = ['/dashboard', '/profile', '/settings'];
+
   const {
     data: { user },
   } = await supabase.auth.getUser()
+  console.log("Middleware user check:", user); 
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth')
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
+  if (request.nextUrl.pathname === '/login' && user) {
+    // ユーザーが認証されているのにログインページにアクセスした場合、セッションをクリア
+    await supabase.auth.signOut();
+    console.log("Cleared session in middleware");
+  }
+
+  const path = request.nextUrl.pathname
+
+  if(!user) {
+    console.log("User not authenticated");
+    if(protectedRoutes.some(route => path.startsWith(route))){
+      console.log("Attempting to access protected route, redirecting to /login");
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      return NextResponse.redirect(url)
+    }
+  } else {
+    console.log("User authenticated");
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're

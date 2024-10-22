@@ -34,7 +34,7 @@ export default async function Login({
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Eメールアドレスとパスワードを入力してください。
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
@@ -72,9 +72,9 @@ export default async function Login({
           </form>
           <OAuthButtons />
           <div className="text-center text-sm">
-            Don&apos;t have an account?{" "}
+            "アカウントを持っていないですか？"
             <button formAction={signup} form="login-form" className="underline">
-              Sign up
+              新規アカウント作成
             </button>
           </div>
         </CardContent>

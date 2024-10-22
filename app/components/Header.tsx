@@ -52,11 +52,11 @@ const Header: React.FC<HeaderProps> = ({ getCurrentUser }) => {
           {user ? (
             <form action={signOut} className="flex items-center gap-2">
               <p>{user.email}</p>
-              <Button>Sign Out</Button>
+              <Button>サインアウト</Button>
             </form>
           ) : (
             <Button asChild>
-              <Link href="/login">Sign In</Link>
+              <Link href="/login">サインイン</Link>
             </Button>
           )}
         </div>
