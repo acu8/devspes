@@ -2,14 +2,17 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Information from "./Information";
-import SideToSide from "./SideToSide";
-import BottomImage from "./BottomImage";
 import Footer from "./Footer";
 import HomeResources from "./HomeResources";
+
+interface TeamCardProps {
+  title: string;
+  icon: React.ReactNode;
+  isActive: boolean;
+  onClick: () => void;
+  path: string;
+}
 
 const TeamCard: React.FC<TeamCardProps> = ({
   title,
