@@ -9,14 +9,7 @@ import Information from "./Information";
 import SideToSide from "./SideToSide";
 import BottomImage from "./BottomImage";
 import Footer from "./Footer";
-
-interface TeamCardProps {
-  title: string;
-  icon: React.ReactNode;
-  isActive: boolean;
-  onClick: () => void;
-  path: string;
-}
+import HomeResources from "./HomeResources";
 
 const TeamCard: React.FC<TeamCardProps> = ({
   title,
@@ -107,37 +100,6 @@ const Home = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Hero Section */}
-      <section className="relative h-[1000px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#c5ff3d] via-[#8ee7f3] to-[#405bff] z-0"></div>
-        <div className="relative z-10 text-center">
-          <h1 className="text-6xl font-bold mb-8">Start Today</h1>
-          <Button size="lg">Join US ! </Button>
-          {/* <Button variant="outline" size="lg">
-            Watch video →
-          </Button> */}
-        </div>
-      </section>
-      {/* Feature section */}
-      <section className="bg-blue-600 text-white p-8">
-        <h2 className="text-3xl font-bold mb-8">
-          The Work AI platform for quickly & securely bringing AI into the
-          enterprise.
-        </h2>
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="bg-blue-700 p-4 rounded">
-            <h3 className="font-semibold mb-2">GenAI engine</h3>
-          </div>
-          <div className="bg-blue-700 p-4 rounded">
-            <h3 className="font-semibold mb-2">AI-powered search</h3>
-          </div>
-          <div className="bg-blue-700 p-4 rounded">
-            <h3 className="font-semibold mb-2">Security & governance</h3>
-          </div>
-        </div>
-      </section>
-      {/* Capabilities section */}
-
       <div className="h-[1000px] bg-[#fffaf0] py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row">
@@ -167,9 +129,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Information />
-      <SideToSide />
-      <BottomImage />
+      <HomeResources />
       <Footer />
     </div>
   );

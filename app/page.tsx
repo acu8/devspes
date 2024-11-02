@@ -10,6 +10,7 @@ export default async function Page() {
     <div className="min-h-screen bg-white">
       <Header getCurrentUser={getCurrentUser} />
       <Home />
+      
     </div>
   );
 }
