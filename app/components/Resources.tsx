@@ -32,45 +32,55 @@ const Resources = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6 text-gray-600">
-        Engineering Resources
+        無料で学べるリソース
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {resources.map((resource) => (
-          <div key={resource.id} className="border rounded-lg p-4 shadow-md">
-            <h2 className="text-xl font-semibold mb-2 text-gray-600">
-              {resource.title}
-            </h2>
-            <p className="text-gray-600 mb-2">{resource.company}</p>
-            <p className="text-sm text-gray-500 mb-4">{resource.author}</p>
-            <p className="mb-4 text-gray-600">{resource.description}</p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {resource.tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="bg-gray-200 rounded-full px-3 py-1 text-sm"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <a
-              href={resource.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
+          <div className="card bg-gray-50 w-full shadow-xl h-[600px]">
+            <figure className="px-10 pt-10">
+              <img src="apple.jpg" alt="Shoes" className="rounded-xl" />
+            </figure>
+            <div
+              key={resource.id}
+              className="card-body items-center text-center"
             >
-              View Resource
-            </a>
-            {resource.video_flag && resource.video_url && (
-              <a
-                href={resource.video_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ml-4 text-green-500 hover:underline"
-              >
-                Watch Video
-              </a>
-            )}
+              <h2 className="card-title">{resource.title}</h2>
+              <p className="text-gray-600 mb-1">{resource.company}</p>
+              <p className="text-sm text-gray-500 mb-2">{resource.author}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {resource.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-gray-200 rounded-full px-3 py-1 text-sm"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="card-actions">
+                <a
+                  href={resource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  <button className="btn btn-outline btn-info">
+                    詳細を見る
+                  </button>
+                </a>
+                {resource.video_flag && resource.video_url && (
+                  <a
+                    href={resource.video_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <button className="btn btn-outline btn-success">
+                      ビデオを見る
+                    </button>
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </div>
