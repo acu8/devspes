@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getResources } from "../lib/getResources";
+import { getResources } from "../../lib/getResources";
 import { Resource } from "@/app/types/resource";
 
 const gitmojis = [
@@ -59,7 +59,13 @@ const gitmojis = [
   "🏷️",
 ];
 
-export default function Page() {
+interface Props {
+  params: {
+    category: string;
+  };
+}
+
+export default function CategoryPage({ params }: Props) {
   const [resources, setResources] = useState<Resource[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -73,7 +79,20 @@ export default function Page() {
     try {
       setIsLoading(true);
       const data = await getResources();
-      setResources(data);
+      console.log("Looking for category:", params.category.toLowerCase());
+
+      const filteredResources = data.filter((resource) =>
+        resource.tags
+          .map((tag) => tag.toLowerCase())
+          .includes(params.category.toLowerCase())
+      );
+
+      // const filteredResources = data.filter((resource) =>
+      //   resource.tags.includes(params.category.toLowerCase())
+      // );
+      console.log("filteredResources:", filteredResources);
+
+      setResources(filteredResources);
     } catch (err) {
       setError("Error fetching resources");
       console.error(err);
@@ -84,7 +103,7 @@ export default function Page() {
 
   useEffect(() => {
     fetchResources();
-  }, []);
+  }, [params.category]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -92,11 +111,14 @@ export default function Page() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6 text-gray-600">
-        無料で学べるリソース
+        {params.category}のリソース
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {resources.map((resource) => (
-          <div className="card bg-gray-50 w-full shadow-xl h-[600px]">
+          <div
+            key={resource.id}
+            className="card bg-gray-50 w-full shadow-xl h-[600px]"
+          >
             <figure className="px-10 pt-10">
               <div className="flex items-center justify-center rounded-xl w-full h-48">
                 <span
@@ -108,10 +130,7 @@ export default function Page() {
                 </span>
               </div>
             </figure>
-            <div
-              key={resource.id}
-              className="card-body items-center text-center"
-            >
+            <div className="card-body items-center text-center">
               <h2 className="card-title">{resource.title}</h2>
               <p className="text-gray-600 mb-1">{resource.company}</p>
               <p className="text-sm text-gray-500 mb-2">{resource.author}</p>
