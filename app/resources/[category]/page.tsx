@@ -79,12 +79,8 @@ export default function CategoryPage({ params }: Props) {
     try {
       setIsLoading(true);
       const data = await getResources();
-      console.log("Looking for category:", params.category.toLowerCase());
-
       const filteredResources = data.filter((resource) =>
-        resource.tags
-          .map((tag) => tag.toLowerCase())
-          .includes(params.category.toLowerCase())
+        resource.category.toLowerCase().includes(params.category.toLowerCase())
       );
 
       // const filteredResources = data.filter((resource) =>
