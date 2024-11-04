@@ -3,11 +3,72 @@ import React, { useState, useEffect } from "react";
 import { Resource } from "../types/resource";
 import { getResources } from "../lib/getResources";
 
+const gitmojis = [
+  "🎨",
+  "⚡️",
+  "🔥",
+  "🐛",
+  "✨",
+  "📝",
+  "🚀",
+  "💄",
+  "🎉",
+  "✅",
+  "🔒",
+  "🔖",
+  "🚨",
+  "🚧",
+  "💚",
+  "⬇️",
+  "⬆️",
+  "📌",
+  "👷",
+  "📈",
+  "♻️",
+  "➕",
+  "➖",
+  "🔧",
+  "🔨",
+  "🌐",
+  "✏️",
+  "💩",
+  "⏪",
+  "🔀",
+  "📦",
+  "👽",
+  "🚚",
+  "📄",
+  "💥",
+  "🍱",
+  "♿️",
+  "💡",
+  "🍻",
+  "💬",
+  "🗃️",
+  "🔊",
+  "🔇",
+  "👥",
+  "🚸",
+  "🏗️",
+  "📱",
+  "🤡",
+  "🥚",
+  "🙈",
+  "📸",
+  "⚗️",
+  "🔍",
+  "🏷️",
+];
+
 const Resources = () => {
   const [resources, setResources] = useState<Resource[]>([]);
-
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const getRamdomGitmoji = () => {
+    const randomIndex = Math.floor(Math.random() * gitmojis.length);
+    return gitmojis[randomIndex];
+  };
 
   const fetchResources = async () => {
     try {
@@ -38,7 +99,15 @@ const Resources = () => {
         {resources.map((resource) => (
           <div className="card bg-gray-50 w-full shadow-xl h-[600px]">
             <figure className="px-10 pt-10">
-              <img src="apple.jpg" alt="Shoes" className="rounded-xl" />
+              <div className="flex items-center justify-center rounded-xl w-full h-48">
+                <span
+                  className="text-8xl"
+                  role="img"
+                  aria-label="resource icon"
+                >
+                  {getRamdomGitmoji()}
+                </span>
+              </div>
             </figure>
             <div
               key={resource.id}
