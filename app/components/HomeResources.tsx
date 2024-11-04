@@ -12,11 +12,71 @@ import "swiper/css/free-mode";
 import { FreeMode, Pagination, Mousewheel, Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 
+const gitmojis = [
+  "🎨",
+  "⚡️",
+  "🔥",
+  "🐛",
+  "✨",
+  "📝",
+  "🚀",
+  "💄",
+  "🎉",
+  "✅",
+  "🔒",
+  "🔖",
+  "🚨",
+  "🚧",
+  "💚",
+  "⬇️",
+  "⬆️",
+  "📌",
+  "👷",
+  "📈",
+  "♻️",
+  "➕",
+  "➖",
+  "🔧",
+  "🔨",
+  "🌐",
+  "✏️",
+  "⏪",
+  "🔀",
+  "📦",
+  "👽",
+  "🚚",
+  "📄",
+  "💥",
+  "🍱",
+  "♿️",
+  "💡",
+  "🍻",
+  "💬",
+  "🗃️",
+  "🔊",
+  "🔇",
+  "👥",
+  "🚸",
+  "🏗️",
+  "📱",
+  "🤡",
+  "🥚",
+  "🙈",
+  "📸",
+  "⚗️",
+  "🔍",
+  "🏷️",
+];
+
 const HomeResources = () => {
   const [resources, setResources] = useState<Resource[]>([]);
-
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const getRandomGitmoji = () => {
+    const randomIndex = Math.floor(Math.random() * gitmojis.length);
+    return gitmojis[randomIndex];
+  };
 
   const fetchResources = async () => {
     try {
@@ -41,7 +101,7 @@ const HomeResources = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="flex items-center justify-center flex-col h-[900px] bg-[#9498a5]">
+    <div className="flex items-center justify-center flex-col h-[1100px] bg-[#9498a5]">
       <div className="relative w-full max-w-[95%]">
         <Swiper
           breakpoints={{
@@ -65,9 +125,17 @@ const HomeResources = () => {
         >
           {resources.map((resource) => (
             <SwiperSlide key={resource.id}>
-              <div className="card bg-gray-50 w-full shadow-xl h-[600px]">
+              <div className="card bg-gray-50 w-full shadow-xl  h-[460px]">
                 <figure className="px-10 pt-10">
-                  <img src="apple.jpg" alt="Shoes" className="rounded-xl" />
+                  <div className="flex items-center justify-center rounded-xl w-full h-48">
+                    <span
+                      className="text-8xl"
+                      role="img"
+                      aria-label="resource icon"
+                    >
+                      {getRandomGitmoji()}
+                    </span>
+                  </div>
                 </figure>
                 <div
                   key={resource.id}
