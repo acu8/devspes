@@ -14,3 +14,4 @@ export interface Resource {
     video_url: string | null;
     video_flag: boolean;
   }
+

@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import Footer from "./Footer";
 import HomeResources from "./HomeResources";
 import TechGrid from "./TechGrid";
+import Test from "./Test";
 
 interface TeamCardProps {
   title: string;
@@ -136,6 +137,7 @@ const Home = () => {
       <HomeResources />
       <TechGrid />
       <Footer />
+      <Test />
     </div>
   );
 };

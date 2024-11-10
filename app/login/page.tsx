@@ -13,6 +13,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "../utils/supabase/server";
 import { OAuthButtons } from "./oauth-signin";
 
+
 export default async function Login({
   searchParams,
 }: {
