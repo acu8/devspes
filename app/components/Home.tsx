@@ -137,7 +137,6 @@ const Home = () => {
       <HomeResources />
       <TechGrid />
       <Footer />
-      <Test />
     </div>
   );
 };
