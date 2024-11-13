@@ -17,8 +17,6 @@ const CompanyGrid = () => {
             <Link
               key={tech.name}
               href={`/resources/${tech.company}`}
-              target="_blank"
-              rel="noopener noreferrer"
               className="block"
             >
               <Card className="h-full transition-transform hover:scale-105">
