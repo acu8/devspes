@@ -5,7 +5,29 @@ import Link from "next/link";
 
 const CompanyGrid = () => {
   const companies = [
-    { name: "Python", logo: "/logo/python.png", company: "python" },
+    {
+      name: "株式会社リクルート",
+      logo: "/company/Recruit.jpg",
+      company: "株式会社リクルート",
+    },
+    {
+      name: "サイボウズ株式会社",
+      logo: "/company/サイボウズ.png",
+      company: "サイボウズ株式会社",
+    },
+    { name: "MIXI", logo: "/company/MIXI_works_01.jpg", company: "MIXI" },
+    { name: "メルカリ", logo: "/company/mercari.png", company: "メルカリ" },
+    {
+      name: "KDDIアジャイル開発センター",
+      logo: "/company/124341.jpg",
+      company: "KDDIアジャイル開発センター",
+    },
+    { name: "ゆめみ", logo: "/company/yumemi.svg", company: "ゆめみ" },
+    {
+      name: "GMOペパボ",
+      logo: "/company/GMO .png",
+      company: "株式会社リクルート",
+    },
   ];
 
   return (
