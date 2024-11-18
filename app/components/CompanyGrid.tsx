@@ -50,10 +50,12 @@ const CompanyGrid = () => {
   ];
 
   return (
-    <div className="flex items-center justify-center flex-col h-[1000px] bg-[#f7ea3a]">
-      <div className="container mx-auto px-4 py-8 w-full bg-[#]">
-        <h1 className="text-2xl font-bold mb-8">最近追加された企業リソース</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+    <div className="flex items-center justify-center flex-col h-[600px] bg-[#f7ea3a]">
+      <div className="w-full px-4 py-8">
+        <h1 className="text-3xl font-bold mb-20 text-center">
+          最近追加された企業リソース
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
           {companies.map((tech) => (
             <Link
               key={tech.name}
@@ -61,13 +63,13 @@ const CompanyGrid = () => {
               className="block"
             >
               <Card className="h-full transition-transform hover:scale-105">
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <div className="w-12 h-12 mb-4">
+                <CardContent className="flex flex-col items-center justify-center p-4">
+                  <div className="w-42 h-32 mb-2">
                     <Image
                       src={tech.logo}
                       alt={`${tech.name} logo`}
-                      width={48}
-                      height={48}
+                      width={300}
+                      height={300}
                       className="w-full h-full object-contain"
                     />
                   </div>
@@ -78,6 +80,13 @@ const CompanyGrid = () => {
               </Card>
             </Link>
           ))}
+        </div>
+        <div className="flex justify-center mt-20">
+          <Link href="/company">
+            <button className="btn btn-outline btn-success btn-lg">
+              すべての企業リソースを見る
+            </button>
+          </Link>
         </div>
       </div>
     </div>
