@@ -52,7 +52,7 @@ const CompanyGrid = () => {
   return (
     <div className="flex items-center justify-center flex-col h-[1000px] bg-[#f7ea3a]">
       <div className="container mx-auto px-4 py-8 w-full bg-[#]">
-        <h1 className="text-2xl font-bold mb-8">会社の研修資料</h1>
+        <h1 className="text-2xl font-bold mb-8">最近追加された企業リソース</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {companies.map((tech) => (
             <Link
