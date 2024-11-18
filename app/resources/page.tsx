@@ -64,7 +64,7 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const getRamdomGitmoji = () => {
+  const getRandomGitmoji = () => {
     const randomIndex = Math.floor(Math.random() * gitmojis.length);
     return gitmojis[randomIndex];
   };
@@ -94,59 +94,64 @@ export default function Page() {
       <h1 className="text-3xl font-bold mb-6 text-gray-600">
         無料で学べるリソース
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {resources.map((resource) => (
-          <div className="card bg-gray-50 w-full shadow-xl h-[600px]">
-            <figure className="px-10 pt-10">
-              <div className="flex items-center justify-center rounded-xl w-full h-48">
-                <span
-                  className="text-8xl"
-                  role="img"
-                  aria-label="resource icon"
-                >
-                  {getRamdomGitmoji()}
-                </span>
+          <div
+            key={resource.id}
+            className="card bg-white w-full shadow-xl h-[380px] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden"
+          >
+            <div className="absolute inset-x-0 top-0 h-2/3 flex items-center justify-center opacity-[0.15]">
+              <span className="text-[200px]">{getRandomGitmoji()}</span>
+            </div>
+
+            <div className="relative z-10 h-full flex flex-col">
+              <div className="flex-1"></div>
+
+              <div className="flex flex-col items-center justify-center p-4 space-y-3">
+                <h2 className="card-title text-2xl font-bold text-center line-clamp-3">
+                  {resource.title}
+                </h2>
+                <p className="text-gray-700 font-medium text-lg">
+                  {resource.company}
+                </p>
               </div>
-            </figure>
-            <div
-              key={resource.id}
-              className="card-body items-center text-center"
-            >
-              <h2 className="card-title">{resource.title}</h2>
-              <p className="text-gray-600 mb-1">{resource.company}</p>
-              <p className="text-sm text-gray-500 mb-2">{resource.author}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {resource.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-gray-200 rounded-full px-3 py-1 text-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="card-actions">
+
+              <div className="flex-1"></div>
+
+              <div className="px-4 space-y-2">
                 <a
                   href={resource.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
+                  className="w-full"
                 >
-                  <button className="btn btn-outline btn-info">
-                    詳細を見る
-                  </button>
+                  <button className="btn btn-primary w-full">詳細を見る</button>
                 </a>
                 {resource.video_flag && resource.video_url && (
                   <a
                     href={resource.video_url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="w-full"
                   >
-                    <button className="btn btn-outline btn-success">
+                    <button className="btn btn-success w-full">
                       ビデオを見る
                     </button>
                   </a>
                 )}
+              </div>
+
+              <div className="p-4">
+                <div className="flex flex-wrap gap-1.5 justify-center">
+                  {resource.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-green-50 text-green-700 rounded-full px-2.5 py-0.5 text-xs font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
