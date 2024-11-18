@@ -97,9 +97,13 @@ const HomeResources = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-
   return (
     <div className="flex items-center justify-center flex-col h-[1100px] bg-[#9498a5]">
+      <div className="w-full max-w-[95%] text-center mb-12">
+        <h1 className="text-3xl font-bold text-white mb-12">
+          おすすめのリソース
+        </h1>
+      </div>
       <div className="relative w-full max-w-[95%]">
         <Swiper
           breakpoints={{
