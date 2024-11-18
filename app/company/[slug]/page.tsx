@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { getResources } from "../../lib/getResources";
 import { Resource } from "@/app/types/resource";
+import Image from "next/image";
 
 const gitmojis = [
   "🎨",
@@ -61,14 +62,49 @@ const gitmojis = [
 
 interface Props {
   params: {
-    company: string;
+    slug: string;
   };
 }
 
-export default function CategoryPage({ params }: Props) {
+const companyNameMap = {
+  recruit: {
+    name: "株式会社リクルート",
+    logo: "/company/Recruit.jpg",
+  },
+  cybozu: {
+    name: "サイボウズ株式会社",
+    logo: "/company/サイボウズ.png",
+  },
+  mixi: {
+    name: "MIXI",
+    logo: "/company/MIXI_works_01.jpg",
+  },
+  mercari: {
+    name: "メルカリ",
+    logo: "/company/mercari.png",
+  },
+  kddi: {
+    name: "KDDIアジャイル開発センター",
+    logo: "/company/124341.jpg",
+  },
+  yumemi: {
+    name: "ゆめみ",
+    logo: "/company/yumemi.svg",
+  },
+  gmo: {
+    name: "GMOペパボ",
+    logo: "/company/GMO .png",
+  },
+};
+
+export default function CompanyPage({ params }: Props) {
   const [resources, setResources] = useState<Resource[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const company = companyNameMap[params.slug as keyof typeof companyNameMap];
+  const companyName = company ? company.name : params.slug;
+  const logoPath = company ? company.logo : "";
 
   const getRamdomGitmoji = () => {
     const randomIndex = Math.floor(Math.random() * gitmojis.length);
@@ -79,14 +115,10 @@ export default function CategoryPage({ params }: Props) {
     try {
       setIsLoading(true);
       const data = await getResources();
-      const filteredResources = data.filter((resource) =>
-        resource.company.includes(params.company)
-      );
 
-      // const filteredResources = data.filter((resource) =>
-      //   resource.tags.includes(params.category.toLowerCase())
-      // );
-      console.log("filteredResources:", filteredResources);
+      const filteredResources = data.filter(
+        (resource) => resource.slug === params.slug
+      );
 
       setResources(filteredResources);
     } catch (err) {
@@ -99,7 +131,7 @@ export default function CategoryPage({ params }: Props) {
 
   useEffect(() => {
     fetchResources();
-  }, [params.company]);
+  }, [params.slug]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -107,7 +139,7 @@ export default function CategoryPage({ params }: Props) {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6 text-gray-600">
-        {params.company}のリソース
+        {companyName}のリソース
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {resources.map((resource) => (
@@ -117,13 +149,13 @@ export default function CategoryPage({ params }: Props) {
           >
             <figure className="px-10 pt-10">
               <div className="flex items-center justify-center rounded-xl w-full h-48">
-                <span
-                  className="text-8xl"
-                  role="img"
-                  aria-label="resource icon"
-                >
-                  {getRamdomGitmoji()}
-                </span>
+                <Image
+                  src={logoPath}
+                  alt={`${companyName} logo`}
+                  width={200}
+                  height={200}
+                  className="object-contain w-full h-full"
+                />
               </div>
             </figure>
             <div className="card-body items-center text-center">
