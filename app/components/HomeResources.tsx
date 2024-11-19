@@ -127,7 +127,7 @@ const HomeResources = () => {
         >
           {resources.map((resource) => (
             <SwiperSlide key={resource.id}>
-              <div className="card bg-white w-full shadow-xl h-[380px] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden">
+              <div className="card bg-white w-full shadow-xl h-[320px] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden">
                 <div className="absolute inset-x-0 top-0 h-2/3 flex items-center justify-center opacity-[0.15]">
                   <span className="text-[200px]">{getRandomGitmoji()}</span>
                 </div>
