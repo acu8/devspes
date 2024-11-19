@@ -96,7 +96,10 @@ const Resources = () => {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {resources.map((resource) => (
-          <div key={resource.id} className="card bg-white w-full shadow-xl h-[380px] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden">
+          <div
+            key={resource.id}
+            className="card bg-white w-full shadow-xl h-[380px] hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden"
+          >
             <div className="absolute inset-x-0 top-0 h-2/3 flex items-center justify-center opacity-[0.15]">
               <span className="text-[200px]">{getRandomGitmoji()}</span>
             </div>
@@ -108,33 +111,39 @@ const Resources = () => {
                 <h2 className="card-title text-2xl font-bold text-center line-clamp-3">
                   {resource.title}
                 </h2>
-                <p className="text-gray-700 font-medium text-lg">{resource.company}</p>
+                <p className="text-gray-700 font-medium text-lg">
+                  {resource.company}
+                </p>
               </div>
 
               <div className="flex-1"></div>
 
-              <div className="px-4 space-y-2">
-                <a
-                  href={resource.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full"
-                >
-                  <button className="btn btn-primary w-full">
-                    詳細を見る
-                  </button>
-                </a>
-                {resource.video_flag && resource.video_url && (
+              <div className="px-4 space-y-4">
+                <div>
                   <a
-                    href={resource.video_url}
+                    href={resource.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full"
                   >
-                    <button className="btn btn-success w-full">
-                      ビデオを見る
+                    <button className="btn btn-primary w-full">
+                      詳細を見る
                     </button>
                   </a>
+                </div>
+                {resource.video_flag && resource.video_url && (
+                  <div>
+                    <a
+                      href={resource.video_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full"
+                    >
+                      <button className="btn btn-success w-full">
+                        ビデオを見る
+                      </button>
+                    </a>
+                  </div>
                 )}
               </div>
 

@@ -94,7 +94,7 @@ export default function Page() {
       <h1 className="text-3xl font-bold mb-6 text-gray-600">
         無料で学べるリソース
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {resources.map((resource) => (
           <div
             key={resource.id}
@@ -118,26 +118,30 @@ export default function Page() {
 
               <div className="flex-1"></div>
 
-              <div className="px-4 space-y-2">
-                <a
-                  href={resource.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full"
-                >
-                  <button className="btn btn-primary w-full">詳細を見る</button>
-                </a>
-                {resource.video_flag && resource.video_url && (
+              <div className="px-4 space-y-4">
+                <div>
                   <a
-                    href={resource.video_url}
+                    href={resource.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full"
                   >
-                    <button className="btn btn-success w-full">
-                      ビデオを見る
-                    </button>
+                    <button className="btn btn-error w-full">詳細を見る</button>
                   </a>
+                </div>
+                {resource.video_flag && resource.video_url && (
+                  <div>
+                    <a
+                      href={resource.video_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full"
+                    >
+                      <button className="btn btn-success w-full">
+                        ビデオを見る
+                      </button>
+                    </a>
+                  </div>
                 )}
               </div>
 
