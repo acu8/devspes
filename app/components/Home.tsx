@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import HomeResources from "./HomeResources";
 import TechGrid from "./TechGrid";
 import CompanyGrid from "./CompanyGrid";
+import UniversityGrid from "./UniversityGrid";
 
 const AnimatedText = ({ text, delay = 0, onComplete }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -106,6 +107,7 @@ const Home = () => {
       </section>
 
       <CompanyGrid />
+      <UniversityGrid />
       <TechGrid />
       <HomeResources />
       <Footer />
